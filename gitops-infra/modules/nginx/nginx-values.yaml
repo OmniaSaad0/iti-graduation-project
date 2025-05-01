@@ -1,0 +1,10 @@
+controller:
+  service:
+    type: LoadBalancer
+    externalTrafficPolicy: Local
+  publishService:
+    enabled: true
+  admissionWebhooks:
+    enabled: true
+  metrics:
+    enabled: true
