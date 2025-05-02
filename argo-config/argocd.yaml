@@ -3,12 +3,21 @@ kind: Application
 metadata:
   name: node-app
   namespace: argocd
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: myalias=614563210494.dkr.ecr.us-east-1.amazonaws.com/test
+    argocd-image-updater.argoproj.io/myalias.helm.image-spec: app.image
+    argocd-image-updater.argoproj.io/write-back-method: git
+    argocd-image-updater.argoproj.io/git-branch: main
+    argocd-image-updater.argoproj.io/myalias.update-strategy: semver
 spec:
   project: default
   source:
     repoURL: 'https://github.com/ShehabGamal689/gitops'
-    targetRevision: HEAD
-    path: test-k8s-app/overlays/dev
+    targetRevision: main
+    path: test-k8s-app/base
+    helm:
+      valueFiles:
+        - values.yaml
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: default
@@ -16,4 +25,3 @@ spec:
     automated:
       prune: true
       selfHeal: true
-
