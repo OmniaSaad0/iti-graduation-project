@@ -21,6 +21,18 @@ resource "aws_security_group_rule" "node-ingress-self" {
   
 }
 
+resource "aws_security_group_rule" "node-ingress-bastian" {
+  type              = "ingress"
+  from_port         = 0
+  to_port           = 10250
+  protocol          = "-1"
+  security_group_id = aws_security_group.worker_group_sg.id
+  source_security_group_id = var.bastion_sg_id
+  
+}
+
+
+
 resource "aws_security_group_rule" "node-ingress-control" {
   type              = "ingress"
   from_port         = 1025

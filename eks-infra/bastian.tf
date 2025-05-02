@@ -29,6 +29,20 @@ resource "aws_security_group" "bastion_sg" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"] 
   }
+  ingress {
+    description = "argocd"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] 
+  }
+  ingress {
+    description = "jenkins"
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] 
+  }
 
   egress {
     from_port   = 0
@@ -85,7 +99,9 @@ resource "aws_iam_policy" "eks_bastion_policy" {
           "eks:ListUpdates",              
           "eks:DescribeUpdate",           
           "eks:DescribeFargateProfile",   
-          "eks:ListFargateProfiles"       
+          "eks:ListFargateProfiles",
+          "eks:AccessKubernetesApi"
+      
         ]
         Resource = "*"
       },

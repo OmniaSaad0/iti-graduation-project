@@ -63,7 +63,7 @@ ssh -o StrictHostKeyChecking=no -i "$SSH_KEY" "$REMOTE_USER@$PUBLIC_IP" bash <<E
     terraform apply -auto-approve
 
     cd ../argo-config
-    kubectl apply -f argo-cm.yaml
+    # kubectl apply -f argo-cm.yaml
     kubectl apply -f argocd.yaml
 EOF
 
