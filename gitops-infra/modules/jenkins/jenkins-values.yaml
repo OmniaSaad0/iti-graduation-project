@@ -3,10 +3,10 @@ persistence:
   storageClass: "ebs-sc"
   size: 5Gi
 
+
+serviceType: LoadBalancer
+servicePort: 8080
 controller:
-  service:
-    type: LoadBalancer
-    port: 8080
   admin:
     username: admin
     password: admin
