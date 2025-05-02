@@ -10,7 +10,7 @@ data:
         key: username
       passwordSecret:
         name: github-credentials
-        key: token
+        key: password
 
   kustomize.buildOptions: --enable-alpha-plugins
   image-updater.argoproj.io.write-back-method: argocd

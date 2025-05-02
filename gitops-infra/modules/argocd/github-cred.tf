@@ -27,6 +27,6 @@ resource "kubernetes_secret" "github_credentials" {
     type     = base64encode("git")
     url      = base64encode("https://github.com/ShehabGamal689/gitops")
     username = base64encode("ShehabGamal689")
-    token = base64encode(var.github_token)
+    password = base64encode(var.github_token)
   }
 }
