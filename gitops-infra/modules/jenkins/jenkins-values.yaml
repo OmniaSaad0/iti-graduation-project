@@ -4,9 +4,11 @@ persistence:
   size: 5Gi
 
 
-serviceType: LoadBalancer
-servicePort: 8080
+
+
 controller:
+  serviceType: LoadBalancer
+  servicePort: 8080
   admin:
     username: admin
     password: admin
