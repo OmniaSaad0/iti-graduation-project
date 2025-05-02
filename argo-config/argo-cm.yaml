@@ -1,0 +1,28 @@
+apiVersion: v1
+data:
+  application.instanceLabelKey: argocd.argoproj.io/instance
+  repositories: |
+    - type: git
+      url: https://github.com/ShehabGamal689/gitops
+      name: gitops
+      usernameSecret:
+        name: github-credentials
+        key: username
+      passwordSecret:
+        name: github-credentials
+        key: token
+  kustomize.buildOptions: --enable-alpha-plugins
+  image-updater.argoproj.io.write-back-method: argocd
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"application.instanceLabelKey":"argocd.argoproj.io/instance","image-updater.argoproj.io.write-back-method":"argocd","kustomize.buildOptions":"--enable-alpha-plugins","repositories":"- url: https://github.com/ShehabGamal689/gitops\n"},"kind":"ConfigMap","metadata":{"annotations":{},"creationTimestamp":"2025-04-24T10:45:34Z","labels":{"app.kubernetes.io/name":"argocd-cm","app.kubernetes.io/part-of":"argocd"},"name":"argocd-cm","namespace":"argocd","resourceVersion":"334375","uid":"9851f9bf-35a8-4a48-9d73-d639d3757949"}}
+  creationTimestamp: "2025-04-24T10:45:34Z"
+  labels:
+    app.kubernetes.io/name: argocd-cm
+    app.kubernetes.io/part-of: argocd
+  name: argocd-cm
+  namespace: argocd
+  resourceVersion: "343146"
+  uid: 9851f9bf-35a8-4a48-9d73-d639d3757949

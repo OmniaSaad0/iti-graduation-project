@@ -14,7 +14,7 @@
 
 resource "kubernetes_secret" "github_credentials" {
   metadata {
-    name      = "repo-github"  
+    name      = "github-credentials"
     namespace = "argocd"
     labels = {
       "argocd.argoproj.io/secret-type" = "repository"
@@ -27,6 +27,6 @@ resource "kubernetes_secret" "github_credentials" {
     type     = base64encode("git")
     url      = base64encode("https://github.com/ShehabGamal689/gitops")
     username = base64encode("ShehabGamal689")
-    password = base64encode(var.github_token)
+    token = base64encode(var.github_token)
   }
 }

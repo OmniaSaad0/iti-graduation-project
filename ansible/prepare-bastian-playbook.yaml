@@ -4,7 +4,7 @@
   vars:
     aws_region: us-east-1
     eks_cluster_name: my-eks
-    terraform_version: "1.7.5"
+    terraform_version: "1.11.4"
     ansible_user: "ubuntu"
 
   tasks:
@@ -82,12 +82,9 @@
       environment:
         AWS_PROFILE: default
 
-
-    - name: Copy directory from local to remote
-      ansible.builtin.copy:
-        src: ../gitops-infra/
-        dest: /home/{{ ansible_user }}/gitops-infra/
-        owner: "{{ ansible_user }}"
-        group: "{{ ansible_user }}"
-        mode: '0755'
+    - name: Clone the repository
+      git:
+        repo: https://github.com/OmniaSaad0/iti-graduation-project.git
+        dest: iti-graduation-project
+      become_user: "{{ ansible_user }}"
 

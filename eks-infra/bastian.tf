@@ -12,7 +12,7 @@ resource "aws_instance" "bastion" {
   }
 
   provisioner "local-exec" {
-    command = "echo Bastion Public IP: ${self.public_ip} >> EC2_IPs.txt"
+    command = "echo ${self.public_ip} >> EC2_IPs.txt"
   }
 }
 
