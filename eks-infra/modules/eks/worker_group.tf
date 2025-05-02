@@ -25,7 +25,7 @@ resource "aws_eks_node_group" "eks_node_group" {
 
 resource "aws_launch_template" "eks_nodes" {
   name_prefix   = "eks-nodes-"
-  instance_type = "t3.medium"
+  instance_type = var.node_instance_type
   key_name      = "jenkins-slave"
 
 
@@ -33,7 +33,7 @@ resource "aws_launch_template" "eks_nodes" {
     device_name = "/dev/xvda"
 
     ebs {
-      volume_size           = 50
+      volume_size           = 30
       volume_type           = "gp3"
       delete_on_termination = true
       encrypted             = true

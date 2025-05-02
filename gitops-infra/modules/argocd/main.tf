@@ -1,8 +1,10 @@
-resource "kubernetes_namespace" "example" {
+resource "kubernetes_namespace" "argocd-ns" {
   metadata {
     name = "argocd"
   }
 }
+
+
 resource "helm_release" "argocd" {
   name       = var.argocd_helm_name
   namespace  = var.argocd_helm_namespace

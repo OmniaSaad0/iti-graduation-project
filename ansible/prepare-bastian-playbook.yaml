@@ -1,0 +1,93 @@
+---
+- name: Prepare bastion host to work with EKS
+  hosts: bastion
+  vars:
+    aws_region: us-east-1
+    eks_cluster_name: my-eks
+    terraform_version: "1.7.5"
+    ansible_user: "ubuntu"
+
+  tasks:
+
+    - name: Install required packages
+      apt:
+        name:
+          - unzip
+          - curl
+        state: present
+      when: ansible_os_family == 'Debian'
+
+    - name: Install AWS CLI v2
+      shell: |
+        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+        unzip -o awscliv2.zip
+        ./aws/install
+      args:
+        creates: /usr/local/bin/aws
+
+    - name: Install kubectl
+      shell: |
+        curl -LO "https://dl.k8s.io/release/v1.24.7/bin/linux/amd64/kubectl"
+        chmod +x kubectl
+        mv kubectl /usr/local/bin/
+      args:
+        creates: /usr/local/bin/kubectl
+
+    - name: Install eksctl
+      shell: |
+        curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+        mv /tmp/eksctl /usr/local/bin
+      args:
+        creates: /usr/local/bin/eksctl
+
+    - name: Install Terraform
+      shell: |
+        curl -fsSL https://releases.hashicorp.com/terraform/{{ terraform_version }}/terraform_{{ terraform_version }}_linux_amd64.zip -o terraform.zip
+        unzip terraform.zip
+        mv terraform /usr/local/bin/
+      args:
+        creates: /usr/local/bin/terraform
+
+    - name: Ensure .aws directory exists
+      file:
+        path: "/home/{{ ansible_user }}/.aws"
+        state: directory
+        mode: '0700'
+      become_user: "{{ ansible_user }}"
+
+
+    - name: Ensure AWS credentials are available
+      copy:
+        dest: "/home/{{ ansible_user }}/.aws/config"
+        content: |
+          [default]
+          region = {{ aws_region }}
+      become_user: "{{ ansible_user }}"
+      when: aws_region is defined
+
+    - name: add AWS Credentials
+      ansible.builtin.copy:
+        src: ~/.aws/credentials
+        dest: /home/{{ ansible_user }}/.aws/credentials
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: '0600'
+      become_user: "{{ ansible_user }}"
+  
+
+    - name: Update kubeconfig for EKS cluster
+      become_user: "{{ ansible_user }}"
+      shell: |
+        aws eks update-kubeconfig --name {{ eks_cluster_name }} --region {{ aws_region }}
+      environment:
+        AWS_PROFILE: default
+
+
+    - name: Copy directory from local to remote
+      ansible.builtin.copy:
+        src: ../gitops-infra/
+        dest: /home/{{ ansible_user }}/gitops-infra/
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: '0755'
+

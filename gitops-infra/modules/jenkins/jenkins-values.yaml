@@ -35,3 +35,4 @@ controller:
     - workflow-basic-steps
     - workflow-durable-task-step
     - dark-theme
+    - generic-webhook-trigger

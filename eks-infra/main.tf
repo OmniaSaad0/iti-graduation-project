@@ -23,6 +23,8 @@ module "eks" {
   node_group_desired_size  = 3
   node_group_min_size      = 1
   node_group_max_size      = 3
+  bastion_sg_id = aws_security_group.bastion_sg.id
+
 
   tags = {
     Environment = "dev"
