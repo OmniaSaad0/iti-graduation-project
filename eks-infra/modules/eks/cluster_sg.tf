@@ -17,7 +17,7 @@ resource "aws_security_group" "eks_cluster_sg" {
     security_groups = [var.bastion_sg_id]
   }
   ingress {
-    description = "Allow nodes to communicate with each other"
+    description = "Allow bastian to communicate with control plane"
     from_port   = 33080
     to_port     = 33080
     protocol    = "tcp"
