@@ -12,7 +12,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/ShehabGamal689/gitops'
+    repoURL: 'git@github.com:ShehabGamal689/gitops.git'
     targetRevision: main
     path: test-k8s-app/base
     helm:
