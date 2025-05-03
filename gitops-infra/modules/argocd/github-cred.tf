@@ -1,17 +1,3 @@
-# resource "kubernetes_secret" "github_credentials" {
-#   metadata {
-#     name      = "github-credentials"
-#     namespace = "argocd"
-#   }
-
-#   type = "Opaque"
-
-#   data = {
-#     username = base64encode("ShehabGamal689")
-#     password = base64encode(var.github_token)
-#   }
-# }
-
 resource "kubernetes_secret" "github_credentials" {
   metadata {
     name      = "github-credentials"
@@ -24,9 +10,8 @@ resource "kubernetes_secret" "github_credentials" {
   type = "Opaque"
 
   data = {
-    type     = base64encode("git")
-    url      = base64encode("https://github.com/ShehabGamal689/gitops")
-    username = base64encode("ShehabGamal689")
-    password = base64encode(var.github_token)
+    type           = base64encode("git")
+    url            = base64encode("git@github.com:ShehabGamal689/gitops.git")
+    sshPrivateKey  = base64encode(file("~/.ssh/yes")) # Or use a variable if preferred
   }
 }

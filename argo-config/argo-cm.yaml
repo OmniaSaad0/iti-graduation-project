@@ -2,15 +2,12 @@ apiVersion: v1
 data:
   application.instanceLabelKey: argocd.argoproj.io/instance
   repositories: |
-    - url: https://github.com/ShehabGamal689/gitops
+    - url: git@github.com:ShehabGamal689/gitops.git
       name: gitops
       type: git
-      usernameSecret:
+      sshPrivateKeySecret:
         name: github-credentials
-        key: username
-      passwordSecret:
-        name: github-credentials
-        key: password
+        key: sshPrivateKey
 
   kustomize.buildOptions: --enable-alpha-plugins
   image-updater.argoproj.io.write-back-method: argocd
