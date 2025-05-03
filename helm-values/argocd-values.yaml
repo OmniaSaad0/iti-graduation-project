@@ -1,0 +1,16 @@
+repoServer:
+  serviceAccount:
+    create: false
+    name: ecr-read-access-sa
+
+
+applicationController:
+  serviceAccount:
+    create: false
+    name: ecr-read-access-sa
+
+server:
+  serviceAccount:
+    create: false
+    name: ecr-read-access-sa
+

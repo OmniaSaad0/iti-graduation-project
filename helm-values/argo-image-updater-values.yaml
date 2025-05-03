@@ -1,0 +1,30 @@
+serviceAccount:
+  create: false
+  name: ecr-read-access-sa
+
+
+
+# configs:
+#   secret:
+#     server.secretkey: "2tyguXVMNHvp02zOvZS04KYuihc7OMvpZwFSx5VNvOM="  # <-- Base64-encoded 32-byte key
+
+
+authScripts: 
+  enabled: true
+  scripts:
+    auth.sh: |
+      #!/bin/sh
+      HOME=/tmp aws ecr --region us-east-1 get-authorization-token --output text --query 'authorizationData[].authorizationToken' | base64 -d
+
+
+
+config:
+  registries:
+  - name: ECR
+    api_url: https://614563210494.dkr.ecr.us-east-1.amazonaws.com
+    prefix: 614563210494.dkr.ecr.us-east-1.amazonaws.com
+    ping: yes
+    insecure: no
+    default: true
+    credentials: ext:/scripts/auth.sh
+    credsexpire: 10h

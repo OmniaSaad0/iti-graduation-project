@@ -92,7 +92,6 @@ variable "ecr_read_access_role_arn" {
 variable "github_token" {
   description = "GitHub token for ArgoCD"
   type        = string
-  default     = "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"
   
 }
 

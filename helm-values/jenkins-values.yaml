@@ -1,0 +1,40 @@
+persistence:
+  enabled: true
+  storageClass: "ebs-sc"
+  size: 5Gi
+
+
+
+
+controller:
+  serviceType: LoadBalancer
+  servicePort: 8080
+  admin:
+    username: admin
+    password: admin
+  
+  installPlugins:
+    - git
+    - github
+    - github-api
+    - github-branch-source
+    - docker-workflow
+    - kubernetes
+    # Default recommended plugins
+    - configuration-as-code
+    - workflow-aggregator
+    - credentials-binding
+    - plain-credentials
+    - ssh-credentials
+    - matrix-auth
+    - pipeline-stage-view
+    - pipeline-github-lib
+    - antisamy-markup-formatter
+    - mailer
+    - ws-cleanup
+    - workflow-job
+    - workflow-cps
+    - workflow-basic-steps
+    - workflow-durable-task-step
+    - dark-theme
+    - generic-webhook-trigger
